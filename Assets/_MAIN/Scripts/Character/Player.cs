@@ -11,4 +11,15 @@ public class Player : ShiMonoBehaviour
         base.Awake();
         inv = new Inventory(21);
     }
+
+    public virtual void DropItem(Collectable item)
+    {
+        Vector2 spawnPos = transform.position;
+
+        Vector2 spawnOffSet = Random.insideUnitCircle * 1.25f;
+
+        Collectable droppedItem = Instantiate(item, spawnPos + spawnOffSet, Quaternion.identity);
+
+        droppedItem.body.AddForce(spawnOffSet * .2f, ForceMode2D.Impulse);
+    }
 }

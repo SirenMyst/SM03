@@ -21,7 +21,7 @@ public class InventoryUI : ShiMonoBehaviour
         if (!this.invPanel.activeSelf)
         {
             this.invPanel.SetActive(true);
-            this.Setup();
+            this.Refresh();
         }
         else
         {
@@ -29,7 +29,7 @@ public class InventoryUI : ShiMonoBehaviour
         }
     }
 
-    protected virtual void Setup()
+    protected virtual void Refresh()
     {
         if (this.slots.Count == player.inv.slots.Count)
         {
@@ -45,5 +45,15 @@ public class InventoryUI : ShiMonoBehaviour
                 }
             }
         }
+    }
+
+    public virtual void Remove(int slotID)
+    {
+        Collectable itemDrop = 
+            GameManager.Instance.ItemManager.GetItemByType(this.player.inv.slots[slotID].type);
+        if (itemDrop == null) return;
+        this.player.DropItem(itemDrop);
+        this.player.inv.Remove(slotID);
+        this.Refresh();
     }
 }

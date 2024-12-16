@@ -34,6 +34,15 @@ public class Inventory
 
             this.count++;
         }
+
+        public virtual void RemoveItem()
+        {
+            if (this.count <= 0) return;
+            this.count--;
+            if (this.count != 0) return;
+            this.icon = null;
+            this.type = CollectableType.noType;
+        }
     }
 
     public List<Slot> slots = new List<Slot>();
@@ -66,5 +75,10 @@ public class Inventory
                 return;
             }
         }
+    }
+
+    public virtual void Remove(int index)
+    {
+        this.slots[index].RemoveItem();
     }
 }
